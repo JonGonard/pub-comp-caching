@@ -71,5 +71,10 @@ namespace PubComp.Caching.Core.UnitTests.Mocks
         {
             return Task.FromResult<object>(null);
         }
+
+        public void Dispose()
+        {
+            // TODO release managed resources here
+        }
     }
 }

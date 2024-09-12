@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace PubComp.Caching.Core.Notifications
 {
-    public interface ICacheNotifier
+    public interface ICacheNotifier : IDisposable
     {
         string Name { get; }
 

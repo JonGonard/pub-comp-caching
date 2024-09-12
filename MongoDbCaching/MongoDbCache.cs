@@ -251,5 +251,10 @@ namespace PubComp.Caching.MongoDbCaching
             ClearAll();
             return Task.FromResult<object>(null);
         }
+
+        public void Dispose()
+        {
+            // TODO release managed resources here
+        }
     }
 }

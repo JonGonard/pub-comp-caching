@@ -3,6 +3,7 @@ using System;
 
 namespace PubComp.Caching.Core
 {
+    //TODO: Add IDisposable?
     public class CacheSynchronizer
     {
         private readonly ICache cache;

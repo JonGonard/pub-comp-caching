@@ -116,5 +116,10 @@ namespace PubComp.Caching.AopCaching.UnitTests.Mocks
                 this.misses = 0;
             }
         }
+
+        public void Dispose()
+        {
+            innerCache?.Dispose();
+        }
     }
 }

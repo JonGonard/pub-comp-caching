@@ -74,5 +74,10 @@ namespace PubComp.Caching.Core.UnitTests.Mocks
         public void Publish(string cacheName, string key, CacheItemActionTypes action)
         {
         }
+
+        public void Dispose()
+        {
+            // TODO release managed resources here
+        }
     }
 }

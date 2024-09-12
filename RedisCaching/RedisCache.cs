@@ -309,5 +309,10 @@ namespace PubComp.Caching.RedisCaching
             ExpireWithin = this.expireWithin,
             ExpireAt = expireAt
         };
+
+        public void Dispose()
+        {
+            innerCache?.Dispose();
+        }
     }
 }

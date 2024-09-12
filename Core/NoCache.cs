@@ -116,5 +116,10 @@ namespace PubComp.Caching.Core
         {
             return Task.FromResult<object>(null);
         }
-   }
+
+        public void Dispose()
+        {
+            // TODO release managed resources here
+        }
+    }
 }

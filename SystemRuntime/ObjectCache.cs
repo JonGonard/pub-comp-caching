@@ -255,5 +255,10 @@ namespace PubComp.Caching.SystemRuntime
 
             this.Policy.OnSyncProviderFailure
         };
+
+        public void Dispose()
+        {
+            // TODO release managed resources here
+        }
     }
 }

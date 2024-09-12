@@ -268,9 +268,18 @@ namespace PubComp.Caching.Core
         {
             var cacheName = new CacheName(name);
             if (cache == null)
-                caches.TryRemove(cacheName, out var _);
+            {
+                RemoveCache(name);
+            }
             else
-                caches.AddOrUpdate(cacheName, cache, (k, v) => cache);
+            {
+                caches.AddOrUpdate(cacheName, cache, (k, existing) =>
+                {
+                    SafeDispose(existing);
+
+                    return cache;
+                });
+            }
         }
 
         /// <summary>
@@ -281,7 +290,9 @@ namespace PubComp.Caching.Core
         public void RemoveCache(string name)
         {
             var cacheName = new CacheName(name);
-            caches.TryRemove(cacheName, out var _);
+            caches.TryRemove(cacheName, out var existing);
+
+            SafeDispose(existing);
         }
 
         /// <summary>
@@ -290,6 +301,11 @@ namespace PubComp.Caching.Core
         /// </summary>
         public void RemoveAllCaches()
         {
+            foreach (var cacheEntry in caches)
+            {
+                SafeDispose(cacheEntry.Value);
+            }
+
             caches.Clear();
         }
 
@@ -336,9 +352,18 @@ namespace PubComp.Caching.Core
         public void SetNotifier(string name, ICacheNotifier notifier)
         {
             if (notifier == null)
-                notifiers.TryRemove(name, out var _);
+            {
+                RemoveNotifier(name);
+            }
             else
-                notifiers.AddOrUpdate(name, notifier, (k, v) => notifier);
+            {
+                notifiers.AddOrUpdate(name, notifier, (k, existing) =>
+                {
+                    SafeDispose(existing);
+
+                    return notifier;
+                });
+            }
         }
 
         /// <summary>
@@ -348,7 +373,9 @@ namespace PubComp.Caching.Core
         /// <param name="name"></param>
         public void RemoveNotifier(string name)
         {
-            notifiers.TryRemove(name, out var _);
+            notifiers.TryRemove(name, out var notifier);
+
+            SafeDispose(notifier);
         }
 
         /// <summary>
@@ -357,7 +384,24 @@ namespace PubComp.Caching.Core
         /// </summary>
         public void RemoveAllNotifiers()
         {
+            foreach (var notifier in notifiers)
+            {
+                SafeDispose(notifier.Value);
+            }
+
             notifiers.Clear();
+        }
+
+        private void SafeDispose(IDisposable disposable)
+        {
+            try
+            {
+                disposable?.Dispose();
+            }
+            catch (Exception e)
+            {
+                //TODO: Log?
+            }
         }
 
         #endregion

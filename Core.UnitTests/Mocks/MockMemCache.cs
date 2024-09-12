@@ -120,5 +120,10 @@ namespace PubComp.Caching.Core.UnitTests.Mocks
                 this.misses = 0;
             }
         }
+
+        public void Dispose()
+        {
+            innerCache?.Dispose();
+        }
     }
 }

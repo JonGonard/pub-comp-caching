@@ -255,5 +255,12 @@ namespace PubComp.Caching.Core
             Level1CacheName = this.level1.Name,
             Level2CacheName = this.level2.Name
         };
+
+        public void Dispose()
+        {
+            level1?.Dispose();
+            level2?.Dispose();
+            level1Notifier?.Dispose();
+        }
     }
 }

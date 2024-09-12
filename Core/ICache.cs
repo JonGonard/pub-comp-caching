@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace PubComp.Caching.Core
 {
-    public interface ICache
+    public interface ICache : IDisposable
     {
         string Name { get; }
 
